@@ -1,0 +1,36 @@
+﻿@page
+@using System.Text
+@using fiztestone.Models
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+    @functions{
+
+  public void BuildTree(Module module )
+      {
+        <ul>
+                 <li> @module.Text   
+                 @if (module.ChildModules.Any())
+               {
+                   foreach(Module child in module.ChildModules)
+                        BuildTree(child);
+               }
+                </li>
+              
+        </ul>
+        }
+    }
+   <ul >
+       @foreach(Course c in @Model.Courses){
+           <li><b>@c.Title</b>
+               <ul>@foreach(Module m in @c.Modules){
+                   @*<li>@m.text</li>*@
+               BuildTree(@m);
+               }
+               </ul>
+               
+           </li>
+       }
+   </ul>
